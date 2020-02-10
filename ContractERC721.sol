@@ -1,6 +1,7 @@
 pragma solidity ^0.6.1;
 import "./ContractERC165.sol";
 import "./standards/ERC721.sol";
+import "./include/SafeMathOps.sol";
 
 contract ContractERC721 is ERC721, ContractERC165 {
     address internal creator;                       // address of the contract creator
@@ -39,6 +40,29 @@ contract ContractERC721 is ERC721, ContractERC165 {
     // Checks if a given token ID is valid
     function isValidToken(uint256 _tokenId) internal view returns (bool) {
         return _(tokenId != 0) && (_tokenId <= maxId) && (!burned[_tokenId]);
+    }
+
+    // Mints new tokens. Can only be called by contract creator, all newly minted tokens belong to the creator.
+    function issueTokens(uint256 _newTokens) public{
+        require(msg.sender == creator);
+
+        balances[msg.sender] = balances[msg.sender].add(_newTokens);
+        for(uint i = maxId.add(1); i <= maxId.add(_newTokens); i++) {
+            emit Transfer(0x0, creator, i);
+        }
+
+        maxId += _newTokens;
+    }
+
+    // Burn a token
+    function burnToken(uint256 _tokenId) external {
+        address owner = ownerOf(_tokenId);
+        // require sender is the owner of the token or is approved for this token
+        require((owner == msg.sender) || (allowance[_tokenId] == msg.sender) || (authorized[owner][msg.sender]));
+
+        burned[_tokenId] = true;
+        balances[owner]--;
+        emit Transfer(owner, 0x0, _tokenId);
     }
 
     /// @notice Count all NFTs assigned to an owner
