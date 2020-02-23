@@ -1,5 +1,5 @@
-pragma solidity ^0.6.1;
-import "./standards/ERC165.sol";
+pragma solidity ^0.5.16;
+import "./ERC165.sol";
 
 contract ContractERC165 is ERC165 {
     // mapping to store supported interfaceIDs
@@ -9,7 +9,7 @@ contract ContractERC165 is ERC165 {
         supportedInterfaces[this.supportsInterface.selector] = true;
     }
 
-    function supportsInterface(bytes4 interfaceID) external view override returns (bool) {
+    function supportsInterface(bytes4 interfaceID) external view returns (bool) {
         return supportedInterfaces[interfaceID];
     }
 }

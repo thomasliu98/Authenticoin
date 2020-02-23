@@ -1,6 +1,6 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.5.16;
 
-        /// @title ERC-721 Non-Fungible Token Standard
+/// @title ERC-721 Non-Fungible Token Standard
         /// @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
         ///  Note: the ERC-165 identifier for this interface is 0x80ac58cd
         interface ERC721 /* is ERC165 */ {
@@ -47,7 +47,7 @@ pragma solidity ^0.4.20;
             /// @param _to The new owner
             /// @param _tokenId The NFT to transfer
             /// @param data Additional data with no specified format, sent in call to `_to`
-            function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+            function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) external payable;
 
             /// @notice Transfers the ownership of an NFT from one address to another address
             /// @dev This works identically to the other function with an extra data parameter,
@@ -97,28 +97,3 @@ pragma solidity ^0.4.20;
             /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
             function isApprovedForAll(address _owner, address _operator) external view returns (bool);
         }
-
-        interface ERC165 {
-            /// @notice Query if a contract implements an interface
-            /// @param interfaceID The interface identifier, as specified in ERC-165
-            /// @dev Interface identification is specified in ERC-165. This function
-            ///  uses less than 30,000 gas.
-            /// @return `true` if the contract implements `interfaceID` and
-            ///  `interfaceID` is not 0xffffffff, `false` otherwise
-            function supportsInterface(bytes4 interfaceID) external view returns (bool);
-        }
-
-        interface ERC721TokenReceiver {
-            /// @notice Handle the receipt of an NFT
-            /// @dev The ERC721 smart contract calls this function on the
-            /// recipient after a `transfer`. This function MAY throw to revert and reject the transfer. Return
-            /// of other than the magic value MUST result in the transaction being reverted.
-            /// @notice The contract address is always the message sender.
-            /// @param _operator The address which called `safeTransferFrom` function
-            /// @param _from The address which previously owned the token
-            /// @param _tokenId The NFT identifier which is being transferred
-            /// @param _data Additional data with no specified format
-            /// @return `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`
-            /// unless throwing
-            function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes _data) external returns(bytes4);
-         }
