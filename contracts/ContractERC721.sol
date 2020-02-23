@@ -8,7 +8,7 @@ import "./ERC721TokenReceiver.sol";
 /**
  * @dev Implementation of ERC-721 non-fungible token standard.
  */
-contract NFToken is
+contract ContractERC721 is
   ERC721,
   ContractERC165
 {
