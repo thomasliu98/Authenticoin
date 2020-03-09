@@ -1,6 +1,6 @@
 pragma solidity ^0.5.16;
-import "./SafeMath.sol"
-import "./AddressUtils.sol"
+import "./SafeMath.sol";
+import "./AddressUtils.sol";
 
 contract AuthenticoinMintControl{
     using SafeMath for uint256;
@@ -9,8 +9,9 @@ contract AuthenticoinMintControl{
     address public creatorAddress;
 
 
-    modifier onlyCreator(){
+    modifier onlyCreator() {
         require(msg.sender == creatorAddress);
+        _;
     }
 
 }

@@ -1,9 +1,10 @@
 pragma solidity ^0.5.16;
-import "./ContractERC721.sol"
-import "./SafeMath.sol"
-import "./AddressUtils.sol"
-import "./AuthenticoinMintcontrol"
-contract AuthenticoinBase is ContractERC721, AuthenticoinMintcontrol{
+import "./ContractERC721.sol";
+import "./SafeMath.sol";
+import "./AddressUtils.sol";
+import "./AuthenticoinMintControl.sol";
+
+contract AuthenticoinBase is ContractERC721, AuthenticoinMintControl{
     using SafeMath for uint256;
     using AddressUtils for address;
     struct Authenticoin{
@@ -13,7 +14,7 @@ contract AuthenticoinBase is ContractERC721, AuthenticoinMintcontrol{
     }
 
     /**
-    *@dev Array containing all coins. 
+    *@dev Array containing all coins.
     *The coinID of each coin will map to the arrayIndex of the coin
      */
     Authenticoin [] coins;
@@ -23,7 +24,7 @@ contract AuthenticoinBase is ContractERC721, AuthenticoinMintcontrol{
     uint256 _companyID,
     uint256 _productID,
     uint256 _productMetadata
-  ) 
+  )
     internal
     onlyCreator
     returns (uint){
@@ -31,8 +32,8 @@ contract AuthenticoinBase is ContractERC721, AuthenticoinMintcontrol{
             companyID: _companyID,
             productID: _productID,
             productMetadata: _productMetadata
-        })
-        uint256 newCoinID= coins.push(_coin) - 1;
+        });
+        uint256 newCoinID = coins.push(_coin) - 1;
         _transfer(_to, newCoinID);
         return newCoinID;
   }

@@ -212,7 +212,7 @@ contract ContractERC721 is
   )
     external
     payable
-    canTransfer(_tokenId)
+    //canTransfer(_tokenId)
     validNFToken(_tokenId)
   {
     address tokenOwner = idToOwner[_tokenId];
@@ -487,6 +487,14 @@ contract ContractERC721 is
     {
       delete idToApproval[_tokenId];
     }
+  }
+
+  function mint(address _to, uint256 _tokenId) external {
+    _mint(_to, _tokenId);
+  }
+
+  function burn(uint256 _tokenId) external {
+    _burn(_tokenId);
   }
 
 }
